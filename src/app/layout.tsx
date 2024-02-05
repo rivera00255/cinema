@@ -1,6 +1,10 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
+import Header from './_component/Header';
+import Footer from './_component/Footer';
+import QueryProvider from '@/lib/QueryProvider';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const pretendard = localFont({ src: './font/PretendardVariable.ttf' });
 
@@ -16,7 +20,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={pretendard.className}>{children}</body>
+      <body className={pretendard.className}>
+        <QueryProvider>
+          <ReactQueryDevtools initialIsOpen={false} />
+          <Header />
+          {children}
+          <Footer />
+        </QueryProvider>
+      </body>
     </html>
   );
 }
