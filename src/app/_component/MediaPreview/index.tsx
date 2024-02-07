@@ -1,10 +1,9 @@
-import { Media, Movies, TVSeries } from '@/app/type';
+import { Movies, TVSeries } from '@/app/type';
 import styles from './preview.module.scss';
 import Image from 'next/image';
 
 const MediaPreview = ({ item }: { item: Movies | TVSeries }) => {
   const imageUrl = process.env.NEXT_PUBLIC_IMG_URL;
-  // console.log(item);
 
   return (
     <div className={styles.preview}>

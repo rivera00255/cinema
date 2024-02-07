@@ -5,10 +5,9 @@ export type Response = {
   totla_results: number;
 };
 
-export type Media = {
+type MediaDefault = {
   adult: boolean;
   backdropPath: string;
-  genreIds: number[];
   id: string;
   originalLanguage: string;
   overview: string;
@@ -16,6 +15,10 @@ export type Media = {
   posterPath: string;
   voteAverage: number;
   voteCount: number;
+};
+
+type Media = MediaDefault & {
+  genreIds: number[];
   mediaType: 'movie' | 'tv';
 };
 
@@ -31,4 +34,68 @@ export type TVSeries = Media & {
   originalName: string;
   firstAirDate: string;
   originCountry: string[];
+};
+
+export type MovieDetail = Movies & {
+  budget: string;
+  genres: { id: number; name: string }[];
+  revenue: string;
+  runtime: number;
+  status: string;
+  tagline: string;
+  homepage: string;
+  productionCompanies: Object[];
+  productioonContries: Object[];
+  spokenLangrages: Object[];
+};
+
+export type TVDetail = TVSeries & {
+  createdBy: Object[];
+  episodeRunTime: number[];
+  genres: { id: number; name: string }[];
+  homepage: string;
+  inProductuon: boolean;
+  languages: string[];
+  lastAirDate: string;
+  lastEpisodeToAir: Object[];
+  nextEipsodeToAir: Object[];
+  networks: Object[];
+  numberOfEpisode: number;
+  numberOfSeasons: number;
+  originallLanguages: string;
+  originalName: string;
+  productionCompanies: Object[];
+  productioonContries: Object[];
+  spokenLangrages: Object[];
+  spokenLanguages: Object[];
+  seasons: Season[];
+  status: string;
+  tagline: string;
+  type: string;
+};
+
+export type Season = {
+  airDate: string;
+  episodeCount: number;
+  id: string;
+  name: string;
+  overview: string;
+  posterPath: string;
+  seasonNumber: number;
+  voteAverage: number;
+};
+
+export type Cast = {
+  adult: boolean;
+  castId: number;
+  character: string;
+  creditId: string;
+  gender: number;
+  id: string;
+  knownForDepartment: string;
+  name: string;
+  order: number;
+  originalName: string;
+  popularity: number;
+  profilePath: string;
 };

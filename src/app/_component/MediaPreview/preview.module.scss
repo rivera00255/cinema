@@ -1,6 +1,13 @@
 .preview {
   max-width: 200px;
   margin: 14px 20px;
+  &:hover {
+    .background {
+      > img {
+        opacity: 0.1;
+      }
+    }
+  }
 }
 .background {
   position: relative;
