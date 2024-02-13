@@ -218,3 +218,11 @@ video {
 [hidden] {
   display: none;
 }
+
+/* swiper */
+:root {
+  --swiper-theme-color: #475569 !important;
+}
+.swiper {
+  padding: 0 0 0 48px !important;
+}

@@ -1,17 +1,24 @@
 import NotFound from '@/app/not-found';
-import { MovieDetail } from '@/app/type';
+import { Cast, MovieDetail, Video } from '@/app/type';
 import Image from 'next/image';
 import styles from './movie.module.scss';
 import { useQuery } from '@tanstack/react-query';
-import { getCredits } from '@/app/_service';
+import { getCredits, getVideos } from '@/app/_service';
+import CastProfile from '../CastProfile';
+import { cameliseSnakeArr, snakeToCamel } from '@/utilities/snakeToCamel';
 
 const MovieDetails = ({ data }: { data: MovieDetail }) => {
-  // const { data: credits } = useQuery({
-  //   queryKey: ['movie', 'credits', data.id],
-  //   queryFn: () => getCredits('movie', data.id),
+  const { data: credits } = useQuery({
+    queryKey: ['movie', 'credits', data.id],
+    queryFn: () => getCredits('movie', data.id),
+    enabled: !!data.id,
+  });
+
+  // const { data: videos } = useQuery({
+  //   queryKey: ['movie', 'videos', data.id],
+  //   queryFn: () => getVideos('movie', data.id),
   //   enabled: !!data.id,
   // });
-  // console.log(credits);
 
   if (!data) return <NotFound />;
   return (
@@ -43,6 +50,19 @@ const MovieDetails = ({ data }: { data: MovieDetail }) => {
           </div>
         </div>
       </div>
+      <hr />
+      <div className={styles.cast}>
+        {credits?.cast?.slice(0, 6).map((item: Cast) => <CastProfile item={snakeToCamel(item)} key={item.id} />)}
+      </div>
+      {/* <div className={styles.videos}>
+        {videos?.results?.length > 0 &&
+          cameliseSnakeArr(videos?.results).map(
+            (item: Video) =>
+              item.type === 'Trailer' && (
+                <iframe src={`https://www.youtube.com/embed/${item.key}`} key={item.id} style={{ margin: '0 8px' }} />
+              )
+          )}
+      </div> */}
     </div>
   );
 };

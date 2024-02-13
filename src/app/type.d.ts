@@ -99,3 +99,18 @@ export type Cast = {
   popularity: number;
   profilePath: string;
 };
+
+export type Video = {
+  id: string;
+  iso6391: string;
+  iso31661: string;
+  key: string;
+  name: string;
+  official: string;
+  publishedAt: string;
+  site: string;
+  size: number;
+  type: string;
+};
+
+type VideoType = 'Teaser' | 'Trailer' | 'Behind the Scenes' | 'Featurette';

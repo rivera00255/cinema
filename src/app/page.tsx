@@ -10,7 +10,7 @@ export default async function Home() {
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
     queryKey: ['trending', 'movie'],
-    queryFn: () => getTrendingLists('movie'),
+    queryFn: () => getTrendingLists('movie', 'week'),
   });
 
   const dehydratedState = dehydrate(queryClient);

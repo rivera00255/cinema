@@ -4,6 +4,7 @@ import styles from './season.module.scss';
 import { useEffect, useState } from 'react';
 import { Season } from '@/app/type';
 import Image from 'next/image';
+import Dimmer from '@/app/_component/Dimmer';
 
 const SeasonModal = () => {
   const searchParams = useSearchParams();
@@ -25,7 +26,7 @@ const SeasonModal = () => {
   }, [searchParams]);
 
   return (
-    <div className={styles.dimmed}>
+    <Dimmer>
       <div className={styles.modal}>
         {info && (
           <>
@@ -46,7 +47,7 @@ const SeasonModal = () => {
           </>
         )}
       </div>
-    </div>
+    </Dimmer>
   );
 };
 

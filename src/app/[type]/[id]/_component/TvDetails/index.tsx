@@ -1,13 +1,29 @@
 import NotFound from '@/app/not-found';
-import { TVDetail } from '@/app/type';
+import { Cast, TVDetail } from '@/app/type';
 import styles from './tv.module.scss';
 import Image from 'next/image';
-import { cameliseSnakeArr } from '@/utilities/snakeToCamel';
+import { cameliseSnakeArr, snakeToCamel } from '@/utilities/snakeToCamel';
 import Link from 'next/link';
 import { useState } from 'react';
+import PlaceholderImg from '../../../../../assets/image/placeholder.jpg';
+import { useQuery } from '@tanstack/react-query';
+import { getCredits, getVideos } from '@/app/_service';
+import CastProfile from '../CastProfile';
 
 const TvDetails = ({ data }: { data: TVDetail }) => {
   const [limit, setLimit] = useState(6);
+
+  const { data: credits } = useQuery({
+    queryKey: ['tv', 'credits', data.id],
+    queryFn: () => getCredits('tv', data.id),
+    enabled: !!data.id,
+  });
+
+  // const { data: videos } = useQuery({
+  //   queryKey: ['tv', 'videos', data.id],
+  //   queryFn: () => getVideos('tv', data.id),
+  //   enabled: !!data.id,
+  // });
 
   if (!data) return <NotFound />;
   return (
@@ -54,7 +70,9 @@ const TvDetails = ({ data }: { data: TVDetail }) => {
                     alt={data.name}
                   />
                 ) : (
-                  <div>no image</div>
+                  <div className={styles.placeholder}>
+                    <Image src={PlaceholderImg} width={100} height={100} alt={data.name} />
+                  </div>
                 )}
               </div>
               <p>{item.name}</p>
@@ -69,6 +87,10 @@ const TvDetails = ({ data }: { data: TVDetail }) => {
             </button>
           )}
         </div>
+      </div>
+      <hr />
+      <div className={styles.cast}>
+        {credits?.cast?.slice(0, 6).map((item: Cast) => <CastProfile item={snakeToCamel(item)} key={item.id} />)}
       </div>
     </div>
   );
