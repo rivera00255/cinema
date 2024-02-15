@@ -13,7 +13,6 @@ const TrendingLists = () => {
   const { tab } = useContext(TabContext);
 
   const { data } = useQuery({ queryKey: ['trending', tab], queryFn: () => getTrendingLists(tab, 'week') });
-  // console.log(data.results);
 
   return (
     <div className={styles.container}>

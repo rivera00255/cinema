@@ -17,9 +17,11 @@ type MediaDefault = {
   voteCount: number;
 };
 
+export type MediaType = 'movie' | 'tv';
+
 type Media = MediaDefault & {
   genreIds: number[];
-  mediaType: 'movie' | 'tv';
+  mediaType: MediaType;
 };
 
 export type Movies = Media & {
@@ -57,7 +59,7 @@ export type TVDetail = TVSeries & {
   inProductuon: boolean;
   languages: string[];
   lastAirDate: string;
-  lastEpisodeToAir: Object[];
+  lastEpisodeToAir: { [key: string]: any };
   nextEipsodeToAir: Object[];
   networks: Object[];
   numberOfEpisode: number;
@@ -114,3 +116,25 @@ export type Video = {
 };
 
 type VideoType = 'Teaser' | 'Trailer' | 'Behind the Scenes' | 'Featurette';
+
+export type MovieImages = {
+  id: string;
+  backdrops: Image[];
+  logos: Image[];
+  posters: Image[];
+};
+
+export type TVImages = {
+  id: string;
+  stills: Image[];
+};
+
+export type Image = {
+  aspectRatio: number;
+  filePath: string;
+  height: number;
+  width: number;
+  iso6391: string | null;
+  voteAverage: number;
+  voteCount: number;
+};

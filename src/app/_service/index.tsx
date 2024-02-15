@@ -34,6 +34,12 @@ export const getVideos = async (type: string, id: string) => {
   return response.json();
 };
 
+export const getImages = async (type: string, id: string) => {
+  const response = await fetch(`${baseUrl}${type}/${id}/images`, optios);
+  if (!response.ok) throw new Error(`Failed to fetch ${type} - ${id} Images.`);
+  return response.json();
+};
+
 export const getNowPlayingMovie = async () => {
   const response = await fetch(`${baseUrl}movie/now_playing?language=${language}&page=1&region=${region}`, optios);
   if (!response.ok) throw new Error(`Failed to fetch Now Playing.`);

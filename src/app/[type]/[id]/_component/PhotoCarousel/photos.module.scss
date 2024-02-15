@@ -3,13 +3,13 @@
   align-items: center;
   justify-content: center;
 }
-.poster {
-  width: 160px;
-  height: 240px;
+.backdrop {
+  width: 324px;
+  height: 200px;
   position: relative;
   > a {
     > img {
-      object-fit: cover;
+      object-fit: contain;
     }
   }
 }
