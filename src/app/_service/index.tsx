@@ -1,3 +1,6 @@
+import { camelize, snakeToCamel } from '@/utilities/snakeToCamel';
+import { Response } from '../type';
+
 const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 const apiKey = process.env.NEXT_PUBLIC_API_KEY;
 const optios = {
@@ -19,7 +22,7 @@ export const getTrendingLists = async (type: string, time: string) => {
 export const getDetailById = async (type: string, id: string) => {
   const response = await fetch(`${baseUrl}${type}/${id}?language=${language}`, optios);
   if (!response.ok) throw new Error(`Failed to fetch ${type} - ${id} Detail.`);
-  return response.json();
+  return snakeToCamel(await response.json());
 };
 
 export const getCredits = async (type: string, id: string) => {
@@ -38,6 +41,12 @@ export const getImages = async (type: string, id: string) => {
   const response = await fetch(`${baseUrl}${type}/${id}/images`, optios);
   if (!response.ok) throw new Error(`Failed to fetch ${type} - ${id} Images.`);
   return response.json();
+};
+
+export const getDetailByTVSeason = async (seriesId: string, seasonNumber: number) => {
+  const response = await fetch(`${baseUrl}tv/${seriesId}/season/${seasonNumber}?language=ko`, optios);
+  if (!response.ok) throw new Error(`Failed to fetch ${seriesId} - ${seasonNumber} Details.`);
+  return snakeToCamel(await response.json());
 };
 
 export const getNowPlayingMovie = async () => {

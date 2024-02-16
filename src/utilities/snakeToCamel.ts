@@ -5,8 +5,8 @@ const snakeToCamel = (obj: Object) => {
   }, {}) as any;
 };
 
-const cameliseSnakeArr = (arr: Object[]) => {
+const camelize = (arr: Object[]) => {
   return arr.map((obj) => snakeToCamel(obj));
 };
 
-export { snakeToCamel, cameliseSnakeArr };
+export { snakeToCamel, camelize };

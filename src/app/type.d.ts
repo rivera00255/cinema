@@ -1,8 +1,8 @@
 export type Response = {
   page: number;
   results: Movies[] | TVSeries[];
-  total_pages: number;
-  totla_results: number;
+  totalPages: number;
+  totalResults: number;
 };
 
 type MediaDefault = {
@@ -76,15 +76,44 @@ export type TVDetail = TVSeries & {
   type: string;
 };
 
+// export type Season = {
+//   airDate: string;
+//   episodeCount: number;
+//   id: string;
+//   name: string;
+//   overview: string;
+//   posterPath: string;
+//   seasonNumber: number;
+//   voteAverage: number;
+// };
+
 export type Season = {
   airDate: string;
-  episodeCount: number;
+  episodes: Episode[];
   id: string;
   name: string;
   overview: string;
   posterPath: string;
   seasonNumber: number;
   voteAverage: number;
+  Id: string;
+};
+
+export type Episode = {
+  airDate: string;
+  crew: { [key: string]: any }[];
+  episodeNumber: number;
+  guestStars: { [key: string]: any }[];
+  id: StorageManager;
+  name: string;
+  overview: string;
+  productionCode: string;
+  runtime: number;
+  seasonNumber: number;
+  showId: string;
+  stillPath: string;
+  voteAverage: number;
+  voteCount: number;
 };
 
 export type Cast = {

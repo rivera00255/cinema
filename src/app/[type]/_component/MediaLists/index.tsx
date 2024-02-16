@@ -3,7 +3,7 @@ import { getNowPlayingMovie, getPopularLists, getTopRatedLists, getTrendingLists
 import { useQuery } from '@tanstack/react-query';
 import styles from './lists.module.scss';
 import Carousel from '@/app/_component/Carousel';
-import { cameliseSnakeArr } from '@/utilities/snakeToCamel';
+import { camelize } from '@/utilities/snakeToCamel';
 import { MediaType } from '@/app/type';
 
 const MediaLists = ({ type }: { type: MediaType }) => {
@@ -28,19 +28,19 @@ const MediaLists = ({ type }: { type: MediaType }) => {
       {type === 'movie' && (
         <>
           <h3>지금 상영 중</h3>
-          <div>{nowPlaying && <Carousel item={cameliseSnakeArr(nowPlaying.results)} />}</div>
+          <div>{nowPlaying && <Carousel item={camelize(nowPlaying.results)} />}</div>
         </>
       )}
       {type === 'tv' && (
         <>
           <h3>오늘의 인기작</h3>
-          <div>{trending && <Carousel item={cameliseSnakeArr(trending.results)} />}</div>
+          <div>{trending && <Carousel item={camelize(trending.results)} />}</div>
         </>
       )}
       <h3>Popular</h3>
-      <div>{popular && <Carousel item={cameliseSnakeArr(popular.results)} />}</div>
+      <div>{popular && <Carousel item={camelize(popular.results)} />}</div>
       <h3>Top Rated</h3>
-      <div>{topRated && <Carousel item={cameliseSnakeArr(topRated.results)} />}</div>
+      <div>{topRated && <Carousel item={camelize(topRated.results)} />}</div>
     </div>
   );
 };

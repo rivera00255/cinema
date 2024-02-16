@@ -2,7 +2,7 @@
 import { TVDetail } from '@/app/type';
 import styles from './tv.module.scss';
 import Image from 'next/image';
-import { cameliseSnakeArr } from '@/utilities/snakeToCamel';
+import { camelize } from '@/utilities/snakeToCamel';
 import Link from 'next/link';
 import { useState } from 'react';
 import PlaceholderImg from '../../../../../assets/image/placeholder.jpg';
@@ -14,8 +14,8 @@ const TvDetails = ({ data }: { data: TVDetail }) => {
     <div className={styles.detail}>
       <h3>시즌별 정보</h3>
       <div className={styles.seasons}>
-        {cameliseSnakeArr(data.seasons.slice(0, limit)).map((item) => (
-          <Link key={item.id} href={{ pathname: `./${data.id}/season`, query: item }}>
+        {camelize(data.seasons.slice(0, limit)).map((item) => (
+          <Link key={item.id} href={{ pathname: `./${data.id}/season`, query: { seasonNumber: item.seasonNumber } }}>
             <div>
               {item.posterPath ? (
                 <Image

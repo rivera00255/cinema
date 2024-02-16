@@ -3,7 +3,7 @@ import { MovieDetail, Video } from '@/app/type';
 import styles from './movie.module.scss';
 import { useQuery } from '@tanstack/react-query';
 import { getVideos } from '@/app/_service';
-import { cameliseSnakeArr } from '@/utilities/snakeToCamel';
+import { camelize } from '@/utilities/snakeToCamel';
 
 const MovieDetails = ({ data }: { data: MovieDetail }) => {
   const { data: videos } = useQuery({
@@ -18,7 +18,7 @@ const MovieDetails = ({ data }: { data: MovieDetail }) => {
         <>
           <h3>예고편</h3>
           <div className={styles.videos}>
-            {cameliseSnakeArr(videos?.results).map(
+            {camelize(videos?.results).map(
               (item: Video) =>
                 item.type === 'Trailer' && (
                   <iframe src={`https://www.youtube.com/embed/${item.key}`} key={item.id} style={{ margin: '0 8px' }} />

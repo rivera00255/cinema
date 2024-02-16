@@ -19,7 +19,8 @@ const CastModal = () => {
   return (
     <Dimmer>
       <div className={styles.modal}>
-        {credits?.cast?.map((item: Cast) => <CastProfile item={snakeToCamel(item)} key={item.id} />)}
+        <h3>Cast</h3>
+        <div>{credits?.cast?.map((item: Cast) => <CastProfile item={snakeToCamel(item)} key={item.id} />)}</div>
       </div>
     </Dimmer>
   );

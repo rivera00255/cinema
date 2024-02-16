@@ -3,7 +3,6 @@ import { getDetailById } from '@/app/_service';
 import { useQuery } from '@tanstack/react-query';
 import { usePathname } from 'next/navigation';
 import styles from './detail.module.scss';
-import { snakeToCamel } from '@/utilities/snakeToCamel';
 import MediaDetails from './_component/MediaDetails';
 import { MediaType } from '@/app/type';
 
@@ -14,11 +13,7 @@ const Media = () => {
 
   const { data } = useQuery({ queryKey: ['detail', type, id], queryFn: () => getDetailById(type, id) });
 
-  return (
-    <div className={styles.container}>
-      {data && <MediaDetails type={type as MediaType} data={snakeToCamel(data)} />}
-    </div>
-  );
+  return <div className={styles.container}>{data && <MediaDetails type={type as MediaType} data={data} />}</div>;
 };
 
 export default Media;
