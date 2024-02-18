@@ -1,0 +1,18 @@
+{
+  "movie": "Movie",
+  "tv": "TV Series",
+  "trending": "Get the trending movies, TV shows",
+  "nowPlaying": "Now Playing",
+  "todaysTrending": "Today's Trending",
+  "popular": "Popular",
+  "topRated": "Top Rated",
+  "cast": "Cast",
+  "photo": "Photo",
+  "season": "Seasons",
+  "fistAir": "First Air Date",
+  "lastAir": "Last Air Date",
+  "lastSeason": "Last Season To Air",
+  "release": "Release Date",
+  "runtime": "Runtime",
+  "vote": "Vote Average"
+}

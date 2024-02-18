@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import styles from './header.module.scss';
+import SideNav from '../SideNav';
 
 const routes = [
   { id: 1, path: '/movie', route: '영화' },
@@ -20,7 +21,7 @@ const Header = () => {
             </li>
           ))}
         </ul>
-        <button>로그인</button>
+        <SideNav />
       </nav>
     </header>
   );

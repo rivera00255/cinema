@@ -7,12 +7,15 @@ import { useQuery } from '@tanstack/react-query';
 import { getDetailByTVSeason } from '@/app/_service';
 import { Episode } from '@/app/type';
 import { camelize } from '@/utilities/snakeToCamel';
+import { useLanguageStore } from '@/store/language';
 
 const SeasonModal = () => {
   const { id } = useParams();
   const searchParams = useSearchParams();
   const seasonNumber = Number(searchParams.get('seasonNumber'));
   // const [info, setInfo] = useState<Season | undefined>(undefined);
+
+  const { mode } = useLanguageStore();
 
   // const getSeasonInfo = (searchParams: ReadonlyURLSearchParams) => {
   //   const params = new URLSearchParams(searchParams.toString());
@@ -25,8 +28,8 @@ const SeasonModal = () => {
   // };
 
   const { data: info } = useQuery({
-    queryKey: ['tv', 'season', id, seasonNumber],
-    queryFn: () => getDetailByTVSeason(id.toString(), seasonNumber),
+    queryKey: ['tv', 'season', id, seasonNumber, mode],
+    queryFn: () => getDetailByTVSeason(id.toString(), seasonNumber, mode),
     enabled: !!id && seasonNumber > -1,
   });
 

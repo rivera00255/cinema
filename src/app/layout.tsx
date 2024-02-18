@@ -5,6 +5,7 @@ import Header from './_component/Header';
 import Footer from './_component/Footer';
 import QueryProvider from '@/lib/QueryProvider';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import LocaleProvider from '@/lib/i18n/LocaleProvider';
 
 const pretendard = localFont({ src: './font/PretendardVariable.ttf' });
 
@@ -21,12 +22,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={pretendard.className}>
-        <QueryProvider>
-          <ReactQueryDevtools initialIsOpen={false} />
-          <Header />
-          {children}
-          <Footer />
-        </QueryProvider>
+        <LocaleProvider>
+          <QueryProvider>
+            <ReactQueryDevtools initialIsOpen={false} />
+            <Header />
+            {children}
+            <Footer />
+          </QueryProvider>
+        </LocaleProvider>
       </body>
     </html>
   );

@@ -1,16 +1,17 @@
 import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query';
 import styles from './page.module.scss';
 import { getTrendingLists } from './_service';
-import Tab from './_component/main/Tab';
-import TabProvider from './_component/main/TabProvider';
-import TrendingLists from './_component/main/TrendingLists';
+import TabProvider from './_component/TabProvider';
+import Tab from './_component/Tab';
+import TrendingLists from './_component/TrendingLists';
 import { Suspense } from 'react';
 
 export default async function Home() {
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery({
+  await queryClient.prefetchInfiniteQuery({
     queryKey: ['trending', 'movie'],
-    queryFn: () => getTrendingLists('movie', 'week'),
+    queryFn: ({ pageParam }) => getTrendingLists('movie', 'week', pageParam),
+    initialPageParam: 1,
   });
 
   const dehydratedState = dehydrate(queryClient);

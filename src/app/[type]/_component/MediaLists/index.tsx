@@ -5,41 +5,49 @@ import styles from './lists.module.scss';
 import Carousel from '@/app/_component/Carousel';
 import { camelize } from '@/utilities/snakeToCamel';
 import { MediaType } from '@/app/type';
+import { useLanguageStore } from '@/store/language';
+import { useTranslation } from 'react-i18next';
 
 const MediaLists = ({ type }: { type: MediaType }) => {
+  const { mode } = useLanguageStore();
+  const { t } = useTranslation();
+
   const { data: nowPlaying } = useQuery({
-    queryKey: ['nowPlaying', type],
-    queryFn: getNowPlayingMovie,
+    queryKey: ['nowPlaying', type, mode],
+    queryFn: () => getNowPlayingMovie(mode),
     enabled: type === 'movie',
   });
 
   const { data: trending } = useQuery({
-    queryKey: ['trending', 'day'],
-    queryFn: () => getTrendingLists(type, 'day'),
+    queryKey: ['trending', 'day', mode],
+    queryFn: () => getTrendingLists(type, 'day', 1, mode),
     enabled: type === 'tv',
   });
 
-  const { data: popular } = useQuery({ queryKey: ['popular', type], queryFn: () => getPopularLists(type) });
-  const { data: topRated } = useQuery({ queryKey: ['topRated', type], queryFn: () => getTopRatedLists(type) });
+  const { data: popular } = useQuery({ queryKey: ['popular', type, mode], queryFn: () => getPopularLists(type, mode) });
+  const { data: topRated } = useQuery({
+    queryKey: ['topRated', type, mode],
+    queryFn: () => getTopRatedLists(type, mode),
+  });
 
   return (
     <div className={styles.container}>
       <h2>{type === 'movie' ? '영 화' : 'T V'}</h2>
       {type === 'movie' && (
         <>
-          <h3>지금 상영 중</h3>
+          <h3>{t('nowPlaying')}</h3>
           <div>{nowPlaying && <Carousel item={camelize(nowPlaying.results)} />}</div>
         </>
       )}
       {type === 'tv' && (
         <>
-          <h3>오늘의 인기작</h3>
+          <h3>{t('todaysTrending')}</h3>
           <div>{trending && <Carousel item={camelize(trending.results)} />}</div>
         </>
       )}
-      <h3>Popular</h3>
+      <h3>{t('popular')}</h3>
       <div>{popular && <Carousel item={camelize(popular.results)} />}</div>
-      <h3>Top Rated</h3>
+      <h3>{t('topRated')}</h3>
       <div>{topRated && <Carousel item={camelize(topRated.results)} />}</div>
     </div>
   );

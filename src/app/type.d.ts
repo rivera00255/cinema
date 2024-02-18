@@ -5,6 +5,8 @@ export type Response = {
   totalResults: number;
 };
 
+export type Lang = 'ko' | 'en-US';
+
 type MediaDefault = {
   adult: boolean;
   backdropPath: string;
