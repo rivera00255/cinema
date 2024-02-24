@@ -74,3 +74,13 @@ export const getTopRatedLists = async (type: string, lang?: Lang) => {
   if (!response.ok) throw new Error('Failed to fetch Top Rated Lists.');
   return response.json();
 };
+
+export const searchMulti = async (query: string, page: number, lang?: Lang) => {
+  if (!lang) lang = language;
+  const response = await fetch(
+    `${baseUrl}search/multi?query=${query}&include_adult=false&language=${lang}&page=${page}`,
+    optios
+  );
+  if (!response.ok) throw new Error('Failed to fetch Search Results');
+  return response.json();
+};

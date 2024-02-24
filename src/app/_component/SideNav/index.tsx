@@ -16,7 +16,7 @@ const SideNav = () => {
               setMode('ko');
               i18n.changeLanguage('ko');
             }}>
-            한국어(Korean)
+            한국어
           </button>
         </li>
         <li>
@@ -25,7 +25,7 @@ const SideNav = () => {
               setMode('en-US');
               i18n.changeLanguage('en');
             }}>
-            영어(English)
+            English
           </button>
         </li>
       </ul>

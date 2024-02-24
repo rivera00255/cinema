@@ -78,17 +78,6 @@ export type TVDetail = TVSeries & {
   type: string;
 };
 
-// export type Season = {
-//   airDate: string;
-//   episodeCount: number;
-//   id: string;
-//   name: string;
-//   overview: string;
-//   posterPath: string;
-//   seasonNumber: number;
-//   voteAverage: number;
-// };
-
 export type Season = {
   airDate: string;
   episodes: Episode[];
@@ -168,4 +157,17 @@ export type Image = {
   iso6391: string | null;
   voteAverage: number;
   voteCount: number;
+};
+
+export type Person = {
+  adule: boolean;
+  gender: number;
+  id: string;
+  knownFor: Movies[] | TVSeries[];
+  knownForDepartment: string;
+  mediaType: 'person';
+  name: string;
+  originalName: string;
+  popularity: number;
+  profilePath: string;
 };

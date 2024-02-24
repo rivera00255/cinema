@@ -4,20 +4,15 @@
   margin: 0 auto;
   min-height: 80dvh;
   padding: 32px 16px;
-}
-.list {
-  width: 100%;
-}
-.title {
-  display: flex;
-  justify-content: space-between;
   h2 {
     font-size: 18px;
     font-weight: 600;
-  }
-  h3 {
-    font-size: 15px;
-    font-weight: 200;
     margin-bottom: 10px;
   }
+}
+.list {
+  margin: 40px 0;
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 50dvh;
 }

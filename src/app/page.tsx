@@ -5,6 +5,7 @@ import TabProvider from './_component/TabProvider';
 import Tab from './_component/Tab';
 import TrendingLists from './_component/TrendingLists';
 import { Suspense } from 'react';
+import SearchForm from './_component/SearchForm';
 
 export default async function Home() {
   const queryClient = new QueryClient();
@@ -19,8 +20,15 @@ export default async function Home() {
   return (
     <main className={styles.container}>
       <div className={styles.list}>
-        <h2>Trending</h2>
-        <h3>이번주 인기 급상승</h3>
+        <div className={styles.title}>
+          <div>
+            <h2>Trending</h2>
+            <h3>이번주 인기 급상승</h3>
+          </div>
+          <div>
+            <SearchForm />
+          </div>
+        </div>
         <TabProvider>
           <HydrationBoundary state={dehydratedState}>
             <Tab />

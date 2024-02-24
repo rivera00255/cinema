@@ -21,7 +21,7 @@ const MovieDetails = ({ data }: { data: MovieDetail }) => {
             {camelize(videos?.results).map(
               (item: Video) =>
                 item.type === 'Trailer' && (
-                  <iframe src={`https://www.youtube.com/embed/${item.key}`} key={item.id} style={{ margin: '0 8px' }} />
+                  <iframe src={`https://www.youtube.com/embed/${item.key}`} key={item.id} style={{ margin: '8px' }} />
                 )
             )}
           </div>

@@ -7,6 +7,7 @@ import { camelize } from '@/utilities/snakeToCamel';
 import { MediaType } from '@/app/type';
 import { useLanguageStore } from '@/store/language';
 import { useTranslation } from 'react-i18next';
+import NotFound from '@/app/not-found';
 
 const MediaLists = ({ type }: { type: MediaType }) => {
   const { mode } = useLanguageStore();
@@ -30,6 +31,7 @@ const MediaLists = ({ type }: { type: MediaType }) => {
     queryFn: () => getTopRatedLists(type, mode),
   });
 
+  if (type !== 'movie' && type !== 'tv') return <NotFound />;
   return (
     <div className={styles.container}>
       <h2>{type === 'movie' ? '영 화' : 'T V'}</h2>
