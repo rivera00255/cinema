@@ -15,7 +15,9 @@ const CastProfile = ({ item }: { item: Cast }) => {
             alt={item.name}
           />
         ) : (
-          <Image src={PlaceholderImg} alt={item.name} />
+          <div className={styles.placeholder}>
+            <Image src={PlaceholderImg} fill={true} sizes="(max-width: 768px) 100vw, 33vw" alt={item.name} />
+          </div>
         )}
       </div>
       <p>

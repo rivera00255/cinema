@@ -12,7 +12,7 @@ const Dimmer = ({ children }: { children: ReactNode }) => {
   };
 
   useEffect(() => {
-    typeof window !== undefined && scrollTo(0, 0);
+    if (typeof window !== 'undefined') scrollTo(0, 0);
     document.body.style.overflow = 'hidden';
     return () => {
       document.body.style.overflow = 'unset';

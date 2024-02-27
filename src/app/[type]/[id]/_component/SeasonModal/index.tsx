@@ -1,5 +1,5 @@
 'use client';
-import { ReadonlyURLSearchParams, useParams, useSearchParams } from 'next/navigation';
+import { useParams, useSearchParams } from 'next/navigation';
 import styles from './season.module.scss';
 import Image from 'next/image';
 import Dimmer from '@/app/_component/Dimmer';
@@ -61,7 +61,7 @@ const SeasonModal = () => {
                 </p>
                 {info.episodes.length < 11 &&
                   camelize(info.episodes).map((item: Episode) => (
-                    <p>
+                    <p key={item.name}>
                       <strong>{item.name}</strong>&nbsp;&nbsp;
                       {item.airDate}
                     </p>

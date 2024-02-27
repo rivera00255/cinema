@@ -11,14 +11,14 @@ const useIntersectionObserver = (targetRef: RefObject<HTMLDivElement | null>) =>
       );
     }
     return observerRef.current;
-  }, [observerRef.current]);
+  }, []);
 
   useEffect(() => {
     if (targetRef.current) {
       handleObserver().observe(targetRef.current);
     }
     return () => handleObserver().disconnect();
-  }, [targetRef.current]);
+  }, [targetRef, handleObserver]);
 
   return intersecting;
 };

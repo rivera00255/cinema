@@ -9,10 +9,13 @@ import { Movies, Person, TVSeries } from '../type';
 import SearchResult from './_component/SearchResults';
 import { camelize } from '@/utilities/snakeToCamel';
 import useIntersectionObserver from '@/hooks/useIntersectionObserver';
+import { useLanguageStore } from '@/store/language';
 
 const Search = () => {
   const searchParams = useSearchParams();
   const query = searchParams.get('q');
+
+  const { mode } = useLanguageStore();
 
   const [queryString, setQueryString] = useState('');
 
@@ -21,8 +24,8 @@ const Search = () => {
   const intersecting = useIntersectionObserver(targetRef);
 
   const { data, isFetching, hasNextPage, fetchNextPage } = useInfiniteQuery({
-    queryKey: ['search', queryString],
-    queryFn: ({ pageParam = 1 }) => searchMulti(queryString, pageParam),
+    queryKey: ['search', queryString, mode],
+    queryFn: ({ pageParam = 1 }) => searchMulti(queryString, pageParam, mode),
     initialPageParam: 1,
     getNextPageParam: (lastPage) => lastPage.page + 1,
   });

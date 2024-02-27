@@ -48,13 +48,13 @@ export type MovieDetail = Movies & {
   status: string;
   tagline: string;
   homepage: string;
-  productionCompanies: Object[];
-  productioonContries: Object[];
-  spokenLangrages: Object[];
+  productionCompanies: { [key: string]: any }[];
+  productioonContries: { [key: string]: any }[];
+  spokenLangrages: { [key: string]: any }[];
 };
 
 export type TVDetail = TVSeries & {
-  createdBy: Object[];
+  createdBy: { [key: string]: any }[];
   episodeRunTime: number[];
   genres: { id: number; name: string }[];
   homepage: string;
@@ -62,16 +62,16 @@ export type TVDetail = TVSeries & {
   languages: string[];
   lastAirDate: string;
   lastEpisodeToAir: { [key: string]: any };
-  nextEipsodeToAir: Object[];
-  networks: Object[];
+  nextEipsodeToAir: { [key: string]: any }[];
+  networks: { [key: string]: any }[];
   numberOfEpisode: number;
   numberOfSeasons: number;
   originallLanguages: string;
   originalName: string;
-  productionCompanies: Object[];
-  productioonContries: Object[];
-  spokenLangrages: Object[];
-  spokenLanguages: Object[];
+  productionCompanies: { [key: string]: any }[];
+  productioonContries: { [key: string]: any }[];
+  spokenLangrages: { [key: string]: any }[];
+  spokenLanguages: { [key: string]: any }[];
   seasons: Season[];
   status: string;
   tagline: string;

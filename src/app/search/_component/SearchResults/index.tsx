@@ -1,3 +1,4 @@
+'use client';
 import { Movies, Person, TVSeries } from '@/app/type';
 import styles from './result.module.scss';
 import Image from 'next/image';
@@ -27,7 +28,7 @@ const SearchResult = ({ data }: { data: Movies | TVSeries | Person }) => {
           {(data as Movies | TVSeries).posterPath || (data as Person).profilePath ? (
             <Image src={getImageUrl(data)} width={160} height={240} alt={data.id} />
           ) : (
-            <Image src={PlaceHolderImg} width={160} height={240} alt="no image" />
+            <Image src={PlaceHolderImg} width={160} height={240} alt="no image" className={styles.placeholder} />
           )}
         </div>
         <div className={styles.desc}>

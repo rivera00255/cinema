@@ -10,7 +10,7 @@ const Person = () => {
   const searchParams = useSearchParams();
 
   const [people, setPeople] = useState<Person | undefined>();
-  console.log(people);
+  // console.log(people);
 
   useEffect(() => {
     const query = searchParams.get('q');

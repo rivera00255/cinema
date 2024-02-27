@@ -2,10 +2,13 @@
 import { useLanguageStore } from '@/store/language';
 import styles from './nav.module.scss';
 import { useTranslation } from 'react-i18next';
+import { useRouter } from 'next/navigation';
 
 const SideNav = () => {
   const { setMode } = useLanguageStore();
   const { i18n } = useTranslation();
+
+  const router = useRouter();
 
   return (
     <div className={styles.container}>
@@ -29,7 +32,7 @@ const SideNav = () => {
           </button>
         </li>
       </ul>
-      <button>로그인</button>
+      <button onClick={() => router.push('../login')}>로그인</button>
     </div>
   );
 };
