@@ -171,3 +171,13 @@ export type Person = {
   popularity: number;
   profilePath: string;
 };
+
+export type Comments = {
+  id: string;
+  content: string;
+  mediaId: string;
+  userId: string;
+  star: number;
+  createdAt: Date;
+  updateAt: Date | null;
+};

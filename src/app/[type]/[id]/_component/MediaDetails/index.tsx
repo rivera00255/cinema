@@ -6,7 +6,8 @@ import Photos from '../Photos';
 import DetailInfo from '../DetailInfo';
 import TvDetails from '../TvDetails';
 import MovieDetails from '../MovieDetails';
-import CommentForm from '../CommentForm';
+import Review from '../Review';
+import AuthProvider from '@/utilities/AuthProvider';
 
 const MediaDetails = ({ type, data }: { type: MediaType; data: MovieDetail | TVDetail }) => {
   return (
@@ -45,9 +46,9 @@ const MediaDetails = ({ type, data }: { type: MediaType; data: MovieDetail | TVD
       {type === 'movie' && <MovieDetails data={data as MovieDetail} />}
       <hr className={styles.row} />
       <h3>리뷰</h3>
-      <div>
-        <CommentForm id={data.id} />
-      </div>
+      <AuthProvider>
+        <Review id={data.id} />
+      </AuthProvider>
     </div>
   );
 };

@@ -3,12 +3,17 @@ import { useLanguageStore } from '@/store/language';
 import styles from './nav.module.scss';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/navigation';
+import { useContext } from 'react';
+import { AuthContext } from '@/utilities/AuthProvider';
+import { supabase } from '@/lib/supabaseClient';
 
 const SideNav = () => {
   const { setMode } = useLanguageStore();
   const { i18n } = useTranslation();
 
   const router = useRouter();
+
+  const session = useContext(AuthContext);
 
   return (
     <div className={styles.container}>
@@ -32,7 +37,16 @@ const SideNav = () => {
           </button>
         </li>
       </ul>
-      <button onClick={() => router.push('../login')}>로그인</button>
+      {!session ? (
+        <button onClick={() => router.push('../login')}>로그인</button>
+      ) : (
+        <button
+          onClick={async () => {
+            await supabase.auth.signOut();
+          }}>
+          로그아웃
+        </button>
+      )}
     </div>
   );
 };

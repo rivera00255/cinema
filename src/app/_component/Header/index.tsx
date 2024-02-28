@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import styles from './header.module.scss';
 import SideNav from '../SideNav';
+import AuthProvider from '@/utilities/AuthProvider';
 
 const routes = [
   { id: 1, path: '/movie', route: '영화' },
@@ -21,7 +22,9 @@ const Header = () => {
             </li>
           ))}
         </ul>
-        <SideNav />
+        <AuthProvider>
+          <SideNav />
+        </AuthProvider>
       </nav>
     </header>
   );
