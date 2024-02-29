@@ -3,19 +3,23 @@ import { SyntheticEvent, useContext, useRef, useState } from 'react';
 import styles from './review.module.scss';
 import { useRouter } from 'next/navigation';
 import { AuthContext } from '@/utilities/AuthProvider';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { addComment, getCommentByMediaIdAndUserId } from '@/app/_service/comment';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { addComment, deleteComment, getCommentByMediaIdAndUserId, updateComment } from '@/app/_service/comment';
 import CommentForm from '../CommentForm';
+import Comment from '../Comment';
 
 const Review = ({ id }: { id: string }) => {
   const [star, setStar] = useState(0);
   const textRef = useRef<HTMLTextAreaElement>(null);
+  const [isEdit, setIsEdit] = useState(false);
 
   const router = useRouter();
 
   const session = useContext(AuthContext);
   const userId = session?.user.id;
   // console.log(session);
+
+  const queryClient = useQueryClient();
 
   const maskingEmail = (email: string) => {
     const id = `${email.split('@')[0].slice(0, 2)}***${email.split('@')[0].slice(-1)}`;
@@ -28,29 +32,81 @@ const Review = ({ id }: { id: string }) => {
     queryFn: () => getCommentByMediaIdAndUserId(id, userId ?? ''),
     enabled: !!userId,
   });
-  // console.log(prevComment);
+  // prevComment && console.log(prevComment[0]);
 
-  const { mutate: createComment } = useMutation({ mutationFn: addComment });
+  const { mutate: writeComment } = useMutation({
+    mutationFn: addComment,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['comment', id] }),
+  });
+
+  const { mutate: editComment } = useMutation({
+    mutationFn: updateComment,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['comment', id] }),
+  });
+
+  const { mutate: delComment } = useMutation({
+    mutationFn: deleteComment,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['comment', id] }),
+  });
 
   const onSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     const content = textRef.current?.value;
-    if (userId && content && content.length > 0) createComment({ content, userId, mediaId: id, star });
+    if (userId && content && content.length > 0) {
+      if (isEdit) {
+        editComment({ content, mediaId: id, star, userId, updatedAt: new Date() });
+        setIsEdit(false);
+      } else {
+        writeComment({ content, userId, mediaId: id, star });
+      }
+    }
   };
 
   return (
     <div>
-      {session && (!prevComment || prevComment.length < 1) && (
-        <>
-          <div className={styles.author}>
-            <p>
-              {session.user.user_metadata.nickname} ({maskingEmail(session.user.email ?? '')})
-            </p>
-            <p>{new Date().toLocaleDateString()}</p>
-          </div>
-          <CommentForm star={star} setStar={setStar} onSubmit={onSubmit} textRef={textRef} />
-        </>
-      )}
+      {session &&
+        (!prevComment || prevComment.length < 1 ? (
+          <>
+            <div className={styles.author}>
+              <p>
+                {session.user.user_metadata.nickname} ({maskingEmail(session.user.email ?? '')})
+              </p>
+              <p>{new Date().toLocaleDateString()}</p>
+            </div>
+            <CommentForm star={star} setStar={setStar} onSubmit={onSubmit} textRef={textRef} />
+          </>
+        ) : (
+          <>
+            <div className={!isEdit ? styles.comment : styles.editActive}>
+              {!isEdit ? (
+                <Comment data={prevComment[0]} />
+              ) : (
+                <CommentForm
+                  star={star}
+                  setStar={setStar}
+                  onSubmit={onSubmit}
+                  textRef={textRef}
+                  prevComment={prevComment[0]}
+                />
+              )}
+              <div className={styles.edit}>
+                {!isEdit ? (
+                  <>
+                    <button onClick={() => setIsEdit(true)}>수정</button>
+                    <button
+                      onClick={() => {
+                        if (userId && confirm('정말 삭제할까요?')) delComment({ userId, mediaId: id });
+                      }}>
+                      삭제
+                    </button>
+                  </>
+                ) : (
+                  <button onClick={() => setIsEdit(false)}>취소</button>
+                )}
+              </div>
+            </div>
+          </>
+        ))}
       <div className={styles.buttonWrapper}>
         <button className={styles.commentButton} onClick={() => router.push(`./${id}/comment`)}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

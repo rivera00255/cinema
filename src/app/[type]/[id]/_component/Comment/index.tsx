@@ -27,9 +27,10 @@ const Comment = ({ data }: { data: Comments }) => {
           ))}
       </div>
       <hr />
-      <div>
+      <div className={styles.text}>
         <p>{data.content}</p>
       </div>
+      <p className={styles.date}>{new Date(data.createdAt).toLocaleDateString()}</p>
     </div>
   );
 };

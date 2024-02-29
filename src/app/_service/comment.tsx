@@ -36,13 +36,13 @@ export const addComment = async ({
 };
 
 export const updateComment = async ({
-  id,
+  mediaId,
   content,
   star,
   userId,
   updatedAt,
 }: {
-  id: string;
+  mediaId: string;
   content: string;
   star: number;
   userId: string;
@@ -52,9 +52,9 @@ export const updateComment = async ({
     .from('comment')
     .update({ content, star, updatedAt })
     .eq('userId', userId)
-    .eq('id', id);
+    .eq('mediaId', mediaId);
 };
 
-export const deleteComment = async ({ id, userId }: { id: string; userId: string }) => {
-  const { error } = await supabase.from('comment').delete().eq('userId', userId).eq('id', id);
+export const deleteComment = async ({ userId, mediaId }: { userId: string; mediaId: string }) => {
+  const { error } = await supabase.from('comment').delete().eq('userId', userId).eq('mediaId', mediaId);
 };

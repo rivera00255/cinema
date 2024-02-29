@@ -178,6 +178,6 @@ export type Comments = {
   mediaId: string;
   userId: string;
   star: number;
-  createdAt: Date;
-  updateAt: Date | null;
+  createdAt: string;
+  updateAt: string | null;
 };

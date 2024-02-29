@@ -6,6 +6,7 @@
   height: 200px;
   padding: 20px;
   font-size: 15px;
+  position: relative;
   > hr {
     border-top: 1px dashed #d1d5db;
     border-bottom: 1px dashed #fff;
@@ -14,4 +15,15 @@
 }
 .rating {
   display: flex;
+}
+.text {
+  min-height: 50%;
+}
+.date {
+  position: absolute;
+  bottom: 8px;
+  right: 12px;
+  font-size: 13px;
+  color: #71717a;
+  font-weight: 300;
 }

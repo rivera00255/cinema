@@ -1,17 +1,20 @@
 'use client';
 import { Dispatch, Fragment, RefObject, SetStateAction, SyntheticEvent } from 'react';
 import styles from './form.module.scss';
+import { Comments } from '@/app/type';
 
 const CommentForm = ({
   star,
   setStar,
   textRef,
   onSubmit,
+  prevComment,
 }: {
   star: number;
   setStar: Dispatch<SetStateAction<number>>;
   textRef: RefObject<HTMLTextAreaElement>;
   onSubmit: (e: SyntheticEvent) => void;
+  prevComment?: Comments;
 }) => {
   return (
     <form onSubmit={onSubmit} className={styles.form}>
@@ -32,10 +35,10 @@ const CommentForm = ({
           ))}
       </div>
       <div className={styles.text}>
-        <textarea maxLength={140} ref={textRef} />
+        <textarea maxLength={140} defaultValue={prevComment?.content || ''} ref={textRef} />
       </div>
       <button>
-        <p>코멘트</p>
+        <p>{!prevComment ? '코멘트' : '수정'}</p>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <svg width="21px" height="21px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
