@@ -8,7 +8,13 @@ import { addComment, deleteComment, getCommentByMediaIdAndUserId, updateComment 
 import CommentForm from '../CommentForm';
 import Comment from '../Comment';
 
-const Review = ({ id }: { id: string }) => {
+export const maskingEmail = (email: string) => {
+  const id = `${email.split('@')[0].slice(0, 2)}***${email.split('@')[0].slice(-1)}`;
+  const mail = email.split('@')[1];
+  return `${id}@${mail}`;
+};
+
+const Review = ({ id, type }: { id: string; type: string }) => {
   const [star, setStar] = useState(0);
   const textRef = useRef<HTMLTextAreaElement>(null);
   const [isEdit, setIsEdit] = useState(false);
@@ -17,15 +23,12 @@ const Review = ({ id }: { id: string }) => {
 
   const session = useContext(AuthContext);
   const userId = session?.user.id;
-  // console.log(session);
+  const metadata = session && {
+    email: session.user.email as string,
+    nickname: session.user.user_metadata.nickname as string,
+  };
 
   const queryClient = useQueryClient();
-
-  const maskingEmail = (email: string) => {
-    const id = `${email.split('@')[0].slice(0, 2)}***${email.split('@')[0].slice(-1)}`;
-    const mail = email.split('@')[1];
-    return `${id}@${mail}`;
-  };
 
   const { data: prevComment } = useQuery({
     queryKey: ['comment', id, userId],
@@ -52,12 +55,12 @@ const Review = ({ id }: { id: string }) => {
   const onSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     const content = textRef.current?.value;
-    if (userId && content && content.length > 0) {
+    if (metadata && userId && content && content.length > 0) {
       if (isEdit) {
         editComment({ content, mediaId: id, star, userId, updatedAt: new Date() });
         setIsEdit(false);
       } else {
-        writeComment({ content, userId, mediaId: id, star });
+        writeComment({ content, userId, mediaId: id, star, mediaType: type, author: metadata });
       }
     }
   };

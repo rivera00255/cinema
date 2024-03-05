@@ -1,5 +1,6 @@
 'use client';
-import { ReactNode, createContext, useState } from 'react';
+import { persist } from '@/utilities/persist';
+import { ReactNode, createContext, useEffect, useState } from 'react';
 
 export const TabContext = createContext({
   tab: 'movie',
@@ -8,6 +9,11 @@ export const TabContext = createContext({
 
 const TabProvider = ({ children }: { children: ReactNode }) => {
   const [tab, setTab] = useState('movie');
+  const saved = persist.getSessionStorage('tab');
+
+  useEffect(() => {
+    if (saved) setTab(saved);
+  }, []);
 
   return <TabContext.Provider value={{ tab, setTab }}>{children}</TabContext.Provider>;
 };

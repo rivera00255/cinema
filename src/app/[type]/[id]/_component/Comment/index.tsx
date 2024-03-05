@@ -1,7 +1,12 @@
+'use client';
 import { Comments } from '@/app/type';
 import styles from './comment.module.scss';
+import { maskingEmail } from '../Review';
+import { usePathname } from 'next/navigation';
 
 const Comment = ({ data }: { data: Comments }) => {
+  const pathname = usePathname();
+
   return (
     <div className={styles.container}>
       <div className={styles.rating}>
@@ -30,7 +35,14 @@ const Comment = ({ data }: { data: Comments }) => {
       <div className={styles.text}>
         <p>{data.content}</p>
       </div>
-      <p className={styles.date}>{new Date(data.createdAt).toLocaleDateString()}</p>
+      <div className={styles.author}>
+        {!pathname.includes('mypage') && (
+          <p>
+            {data.author.nickname} ({maskingEmail(data.author.email)})
+          </p>
+        )}
+        <p>{new Date(data.createdAt).toLocaleDateString()}</p>
+      </div>
     </div>
   );
 };

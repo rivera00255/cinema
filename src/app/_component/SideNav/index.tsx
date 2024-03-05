@@ -14,6 +14,7 @@ const SideNav = () => {
   const router = useRouter();
 
   const session = useContext(AuthContext);
+  // console.log(session);
 
   return (
     <div className={styles.container}>
@@ -36,6 +37,11 @@ const SideNav = () => {
             English
           </button>
         </li>
+        {session && (
+          <li style={{ color: '#71717a' }}>
+            <button onClick={() => router.push('../mypage')}>마이페이지</button>
+          </li>
+        )}
       </ul>
       {!session ? (
         <button onClick={() => router.push('../login')}>로그인</button>

@@ -16,7 +16,15 @@ const CommentModal = () => {
     <Dimmer>
       <div className={styles.modal}>
         <h3>Comment</h3>
-        <div className={styles.list}>{data?.map((item: Comments) => <Comment data={item} key={item.id} />)}</div>
+        <div className={styles.list}>
+          {data && data.length < 1 ? (
+            <div>
+              <p style={{ color: '#a1a1aa' }}>아직 작성된 코멘트가 없습니다.</p>
+            </div>
+          ) : (
+            data?.map((item: Comments) => <Comment data={item} key={item.id} />)
+          )}
+        </div>
       </div>
     </Dimmer>
   );

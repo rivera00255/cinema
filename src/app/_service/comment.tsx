@@ -22,16 +22,23 @@ export const getCommentByMediaIdAndUserId = async (mediaId: string, userId: stri
 
 export const addComment = async ({
   mediaId,
+  mediaType,
   content,
   star,
   userId,
+  author,
 }: {
   mediaId: string;
+  mediaType: string;
   content: string;
   star: number;
   userId: string;
+  author: {
+    email: string;
+    nickname: string;
+  };
 }) => {
-  const { error } = await supabase.from('comment').insert({ mediaId, content, star, userId });
+  const { error } = await supabase.from('comment').insert({ mediaId, content, star, userId, mediaType, author });
   if (error) console.log(error);
 };
 

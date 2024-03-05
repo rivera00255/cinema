@@ -176,7 +176,12 @@ export type Comments = {
   id: string;
   content: string;
   mediaId: string;
+  mediaType: string;
   userId: string;
+  author: {
+    email: string;
+    nickname: string;
+  };
   star: number;
   createdAt: string;
   updateAt: string | null;

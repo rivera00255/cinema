@@ -47,7 +47,7 @@ const MediaDetails = ({ type, data }: { type: MediaType; data: MovieDetail | TVD
       <hr className={styles.row} />
       <h3>리뷰</h3>
       <AuthProvider>
-        <Review id={data.id} />
+        <Review id={data.id} type={type} />
       </AuthProvider>
     </div>
   );
