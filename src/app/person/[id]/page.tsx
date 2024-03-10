@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import styles from './person.module.scss';
 import { camelize } from '@/utilities/snakeToCamel';
+import Link from 'next/link';
 
 const Person = () => {
   const searchParams = useSearchParams();
@@ -40,7 +41,7 @@ const Person = () => {
         <div className={styles.info}>
           <div>
             {camelize(people.knownFor).map((item: Movies | TVSeries) => (
-              <div key={item.id} className={styles.media}>
+              <Link key={item.id} className={styles.media} href={`../${item.mediaType}/${item.id}`}>
                 <div>
                   <Image
                     src={`${process.env.NEXT_PUBLIC_IMG_URL}/w500${item.posterPath}`}
@@ -50,7 +51,7 @@ const Person = () => {
                   />
                 </div>
                 <p>{(item as Movies).title || (item as TVSeries).name}</p>
-              </div>
+              </Link>
             ))}
           </div>
         </div>

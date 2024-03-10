@@ -24,7 +24,7 @@ export default function RootLayout({
       <body className={pretendard.className}>
         <LocaleProvider>
           <QueryProvider>
-            <ReactQueryDevtools initialIsOpen={false} />
+            {/* <ReactQueryDevtools initialIsOpen={false} /> */}
             <Header />
             {children}
             <Footer />

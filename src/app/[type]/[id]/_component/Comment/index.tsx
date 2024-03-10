@@ -36,11 +36,7 @@ const Comment = ({ data }: { data: Comments }) => {
         <p>{data.content}</p>
       </div>
       <div className={styles.author}>
-        {!pathname.includes('mypage') && (
-          <p>
-            {data.author.nickname} ({maskingEmail(data.author.email)})
-          </p>
-        )}
+        {!pathname.includes('mypage') && <p>{maskingEmail(data.author.email)}</p>}
         <p>{new Date(data.createdAt).toLocaleDateString()}</p>
       </div>
     </div>

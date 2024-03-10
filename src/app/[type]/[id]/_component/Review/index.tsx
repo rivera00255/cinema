@@ -7,6 +7,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { addComment, deleteComment, getCommentByMediaIdAndUserId, updateComment } from '@/app/_service/comment';
 import CommentForm from '../CommentForm';
 import Comment from '../Comment';
+import { useTranslation } from 'react-i18next';
 
 export const maskingEmail = (email: string) => {
   const id = `${email.split('@')[0].slice(0, 2)}***${email.split('@')[0].slice(-1)}`;
@@ -20,6 +21,8 @@ const Review = ({ id, type }: { id: string; type: string }) => {
   const [isEdit, setIsEdit] = useState(false);
 
   const router = useRouter();
+
+  const { t } = useTranslation();
 
   const session = useContext(AuthContext);
   const userId = session?.user.id;
@@ -71,9 +74,7 @@ const Review = ({ id, type }: { id: string; type: string }) => {
         (!prevComment || prevComment.length < 1 ? (
           <>
             <div className={styles.author}>
-              <p>
-                {session.user.user_metadata.nickname} ({maskingEmail(session.user.email ?? '')})
-              </p>
+              <p>{maskingEmail(session.user.email ?? '')}</p>
               <p>{new Date().toLocaleDateString()}</p>
             </div>
             <CommentForm star={star} setStar={setStar} onSubmit={onSubmit} textRef={textRef} />
@@ -95,12 +96,12 @@ const Review = ({ id, type }: { id: string; type: string }) => {
               <div className={styles.edit}>
                 {!isEdit ? (
                   <>
-                    <button onClick={() => setIsEdit(true)}>수정</button>
+                    <button onClick={() => setIsEdit(true)}>{t('edit')}</button>
                     <button
                       onClick={() => {
                         if (userId && confirm('정말 삭제할까요?')) delComment({ userId, mediaId: id });
                       }}>
-                      삭제
+                      {t('delete')}
                     </button>
                   </>
                 ) : (

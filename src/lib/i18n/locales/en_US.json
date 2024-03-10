@@ -14,5 +14,15 @@
   "lastSeason": "Last Season To Air",
   "release": "Release Date",
   "runtime": "Runtime",
-  "vote": "Vote Average"
+  "vote": "Vote Average",
+  "signin": "Signin",
+  "email": "Email",
+  "password": "Password",
+  "signup": "Signup",
+  "signout": "Signout",
+  "nickname": "Nickname",
+  "mypage": "MyPage",
+  "edit": "Edit",
+  "delete": "Delete",
+  "comment": "Comment"
 }

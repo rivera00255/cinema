@@ -14,5 +14,15 @@
   "lastSeason": "마지막 시즌",
   "release": "개봉일",
   "runtime": "상영 시간",
-  "vote": "관람 평점"
+  "vote": "관람 평점",
+  "signin": "로그인",
+  "email": "이메일",
+  "password": "비밀번호",
+  "signup": "가 입",
+  "signout": "로그아웃",
+  "nickname": "닉네임",
+  "mypage": "마이페이지",
+  "edit": "수정",
+  "delete": "삭제",
+  "comment": "코멘트"
 }

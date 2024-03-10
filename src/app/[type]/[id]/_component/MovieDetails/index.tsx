@@ -4,11 +4,14 @@ import styles from './movie.module.scss';
 import { useQuery } from '@tanstack/react-query';
 import { getVideos } from '@/app/_service';
 import { camelize } from '@/utilities/snakeToCamel';
+import { useLanguageStore } from '@/store/language';
 
 const MovieDetails = ({ data }: { data: MovieDetail }) => {
+  const { mode } = useLanguageStore();
+
   const { data: videos } = useQuery({
-    queryKey: ['movie', 'videos', data.id],
-    queryFn: () => getVideos('movie', data.id),
+    queryKey: ['movie', 'videos', data.id, mode],
+    queryFn: () => getVideos('movie', data.id, mode),
     enabled: !!data.id,
   });
 

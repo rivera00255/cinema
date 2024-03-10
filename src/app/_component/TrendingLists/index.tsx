@@ -1,9 +1,8 @@
 'use client';
 import { getTrendingLists } from '@/app/_service';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { TabContext } from '../TabProvider';
-
 import { Movies, TVSeries } from '@/app/type';
 import { camelize } from '@/utilities/snakeToCamel';
 import styles from './trending.module.scss';
@@ -13,13 +12,29 @@ import MediaPreview from '../MediaPreview';
 import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 
 const TrendingLists = () => {
+  const [isShow, setIsShow] = useState(false);
+
   const { tab } = useContext(TabContext);
 
   const { mode } = useLanguageStore();
 
   const targetRef = useRef<HTMLDivElement>(null);
-
   const intersecting = useIntersectionObserver(targetRef);
+
+  const scrolllToTop = () => {
+    if (typeof window !== 'undefined') {
+      scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    }
+  };
+
+  const showScrollTopButton = () => {
+    if (typeof window !== 'undefined') {
+      window.scrollY > window.innerHeight ? setIsShow(true) : setIsShow(false);
+    }
+  };
 
   const { data, fetchNextPage, isFetching, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
     queryKey: ['trending', tab, mode],
@@ -36,6 +51,15 @@ const TrendingLists = () => {
     }
   }, [intersecting, hasNextPage, fetchNextPage, isFetching]);
 
+  useEffect(() => {
+    const timer = setTimeout(() => window.addEventListener('scroll', showScrollTopButton), 500);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('scroll', showScrollTopButton);
+    };
+  }, []);
+
   return (
     <div className={styles.container}>
       <div>
@@ -48,6 +72,19 @@ const TrendingLists = () => {
         )}
       </div>
       <div ref={targetRef} />
+      {isShow && (
+        <button className={styles.scrollTop} onClick={scrolllToTop}>
+          <svg width="32px" height="32px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M17 15L12 10L7 15"
+              stroke="#404040"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </button>
+      )}
     </div>
   );
 };

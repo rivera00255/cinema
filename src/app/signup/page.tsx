@@ -3,6 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import styles from './signup.module.scss';
 import { supabase } from '@/lib/supabaseClient';
 import { useRouter } from 'next/navigation';
+import { useTranslation } from 'react-i18next';
 
 type Inputs = {
   email: string;
@@ -13,6 +14,8 @@ type Inputs = {
 
 const Signup = () => {
   const router = useRouter();
+
+  const { t } = useTranslation();
 
   const signup = async ({ email, password, nickname }: { email: string; password: string; nickname: string }) => {
     try {
@@ -51,13 +54,13 @@ const Signup = () => {
     <div className={styles.container}>
       <h2>회원가입</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="email">이메일</label>
+        <label htmlFor="email">{t('email')}</label>
         <input id="email" type="text" placeholder="이메일" {...register('email', { pattern: /^\S+@\S+\.\S+$/ })} />
         {errors.email && <p className={styles.errorMessage}>정확한 이메일 주소를 입력해주세요.</p>}
-        <label htmlFor="nickname">닉네임</label>
+        <label htmlFor="nickname">{t('nickname')}</label>
         <input id="nickname" type="text" placeholder="10자리 이하" {...register('nickname', { maxLength: 10 })} />
         {errors.nickname && <p className={styles.errorMessage}>10자리 이하로 입력해주세요.</p>}
-        <label htmlFor="password">비밀번호</label>
+        <label htmlFor="password">{t('password')}</label>
         <input
           id="password"
           type="password"
@@ -77,7 +80,7 @@ const Signup = () => {
         {watch('password') && watch('passwordConfirm') && watch('password') !== watch('passwordConfirm') && (
           <p className={styles.errorMessage}>비밀번호를 다시 한번 입력해주세요.</p>
         )}
-        <button>가 입</button>
+        <button>{t('signup')}</button>
       </form>
     </div>
   );

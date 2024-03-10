@@ -2,6 +2,7 @@
 import { Dispatch, Fragment, RefObject, SetStateAction, SyntheticEvent } from 'react';
 import styles from './form.module.scss';
 import { Comments } from '@/app/type';
+import { useTranslation } from 'react-i18next';
 
 const CommentForm = ({
   star,
@@ -16,6 +17,8 @@ const CommentForm = ({
   onSubmit: (e: SyntheticEvent) => void;
   prevComment?: Comments;
 }) => {
+  const { t } = useTranslation();
+
   return (
     <form onSubmit={onSubmit} className={styles.form}>
       <div className={styles.rating}>
@@ -38,7 +41,7 @@ const CommentForm = ({
         <textarea maxLength={140} defaultValue={prevComment?.content || ''} ref={textRef} />
       </div>
       <button>
-        <p>{!prevComment ? '코멘트' : '수정'}</p>
+        <p>{!prevComment ? `${t('comment')}` : `${t('edit')}`}</p>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <svg width="21px" height="21px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path

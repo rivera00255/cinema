@@ -5,6 +5,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { supabase } from '@/lib/supabaseClient';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useTranslation } from 'react-i18next';
 
 type Inputs = {
   email: string;
@@ -15,6 +16,8 @@ const Login = () => {
   const [error, setError] = useState('');
 
   const router = useRouter();
+
+  const { t } = useTranslation();
 
   const signin = async ({ email, password }: { email: string; password: string }) => {
     try {
@@ -55,15 +58,15 @@ const Login = () => {
     <div className={styles.container}>
       <h2>이메일로 로그인</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="email">이메일</label>
+        <label htmlFor="email">{t('email')}</label>
         <input id="email" type="text" {...register('email', { required: true, pattern: /^\S+@\S+\.\S+$/ })} />
-        <label htmlFor="password">비밀번호</label>
+        <label htmlFor="password">{t('password')}</label>
         <input
           id="password"
           type="password"
           {...register('password', { required: true, pattern: /^(?=.*[a-z])(?=.*[0-9]).{6,20}$/ })}
         />
-        <button>로그인</button>
+        <button>{t('signin')}</button>
       </form>
       {error && <p className={styles.errorMessage}>{error}</p>}
       <div className={styles.oauthLogin}>
@@ -71,7 +74,7 @@ const Login = () => {
         {/* <button>Google 계정으로 로그인</button> */}
       </div>
       <button>
-        <Link href="/signup">회원가입</Link>
+        <Link href="/signup">{t('signup')}</Link>
       </button>
     </div>
   );
