@@ -6,11 +6,15 @@ import { useQuery } from '@tanstack/react-query';
 import { getCommentByMediaId } from '@/app/_service/comment';
 import Comment from '../Comment';
 import { Comments } from '@/app/type';
+import { CommentKeys } from '@/app/_service/keys';
 
 const CommentModal = () => {
   const { id } = useParams();
 
-  const { data } = useQuery({ queryKey: ['comment', id], queryFn: () => getCommentByMediaId(id.toString()) });
+  const { data } = useQuery({
+    queryKey: CommentKeys.list(id.toString()),
+    queryFn: () => getCommentByMediaId(id.toString()),
+  });
 
   return (
     <Dimmer>

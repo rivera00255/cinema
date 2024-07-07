@@ -10,6 +10,7 @@ import SearchResult from './_component/SearchResults';
 import { camelize } from '@/utilities/snakeToCamel';
 import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 import { useLanguageStore } from '@/store/language';
+import { MediaKeys } from '../_service/keys';
 
 const Search = () => {
   const searchParams = useSearchParams();
@@ -24,7 +25,8 @@ const Search = () => {
   const intersecting = useIntersectionObserver(targetRef);
 
   const { data, isFetching, hasNextPage, fetchNextPage } = useInfiniteQuery({
-    queryKey: ['search', queryString, mode],
+    queryKey: MediaKeys.search(queryString, mode),
+    // queryKey: ['search', queryString, mode],
     queryFn: ({ pageParam = 1 }) => searchMulti(queryString, pageParam, mode),
     initialPageParam: 1,
     getNextPageParam: (lastPage) => lastPage.page + 1,

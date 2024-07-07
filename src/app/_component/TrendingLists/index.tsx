@@ -3,13 +3,14 @@ import { getTrendingLists } from '@/app/_service';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { TabContext } from '../TabProvider';
-import { Movies, TVSeries } from '@/app/type';
+import { MediaType, Movies, TVSeries } from '@/app/type';
 import { camelize } from '@/utilities/snakeToCamel';
 import styles from './trending.module.scss';
 import Link from 'next/link';
 import { useLanguageStore } from '@/store/language';
 import MediaPreview from '../MediaPreview';
 import useIntersectionObserver from '@/hooks/useIntersectionObserver';
+import { MediaKeys } from '@/app/_service/keys';
 
 const TrendingLists = () => {
   const [isShow, setIsShow] = useState(false);
@@ -36,14 +37,12 @@ const TrendingLists = () => {
     }
   };
 
-  const { data, fetchNextPage, isFetching, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
-    queryKey: ['trending', tab, mode],
+  const { data, fetchNextPage, isFetching, hasNextPage } = useInfiniteQuery({
+    queryKey: MediaKeys.list(tab as MediaType, { category: 'trending', time: 'week' }, undefined, mode),
     queryFn: ({ pageParam = 1 }) => getTrendingLists(tab, 'week', pageParam, mode),
     initialPageParam: 1,
     getNextPageParam: (lastPage) => lastPage.page + 1,
   });
-  // console.log(isFetching);
-  // console.log(isFetchingNextPage);
 
   useEffect(() => {
     if (intersecting) {
@@ -63,13 +62,14 @@ const TrendingLists = () => {
   return (
     <div className={styles.container}>
       <div>
-        {data?.pages?.map((page) =>
-          camelize(page.results).map((item: Movies | TVSeries) => (
-            <Link href={`/${item.mediaType}/${item.id}`} key={item.id}>
-              <MediaPreview item={item} />
-            </Link>
-          ))
-        )}
+        {data &&
+          data.pages?.map((page) =>
+            camelize(page.results).map((item: Movies | TVSeries) => (
+              <Link href={`/${item.mediaType}/${item.id}`} key={item.id}>
+                <MediaPreview item={item} />
+              </Link>
+            ))
+          )}
       </div>
       <div ref={targetRef} />
       {isShow && (

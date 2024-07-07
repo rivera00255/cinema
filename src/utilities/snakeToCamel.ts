@@ -6,7 +6,7 @@ const snakeToCamel = (obj: { [key: string]: any }) => {
 };
 
 const camelize = (arr: { [key: string]: any }[]) => {
-  return arr.map((obj) => snakeToCamel(obj));
+  return arr?.map((obj) => snakeToCamel(obj));
 };
 
 export { snakeToCamel, camelize };

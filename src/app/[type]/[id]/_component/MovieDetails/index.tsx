@@ -5,12 +5,14 @@ import { useQuery } from '@tanstack/react-query';
 import { getVideos } from '@/app/_service';
 import { camelize } from '@/utilities/snakeToCamel';
 import { useLanguageStore } from '@/store/language';
+import { MediaKeys } from '@/app/_service/keys';
 
 const MovieDetails = ({ data }: { data: MovieDetail }) => {
   const { mode } = useLanguageStore();
 
   const { data: videos } = useQuery({
-    queryKey: ['movie', 'videos', data.id, mode],
+    queryKey: MediaKeys.detailInfo('movie', data.id, 'videos', mode),
+    // queryKey: ['movie', 'videos', data.id, mode],
     queryFn: () => getVideos('movie', data.id, mode),
     enabled: !!data.id,
   });

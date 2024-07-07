@@ -6,11 +6,12 @@ import Tab from './_component/Tab';
 import TrendingLists from './_component/TrendingLists';
 import { Suspense } from 'react';
 import SearchForm from './_component/SearchForm';
+import { MediaKeys } from './_service/keys';
 
 export default async function Home() {
   const queryClient = new QueryClient();
   await queryClient.prefetchInfiniteQuery({
-    queryKey: ['trending', 'movie'],
+    queryKey: MediaKeys.list('movie', { category: 'trending' }),
     queryFn: ({ pageParam }) => getTrendingLists('movie', 'week', pageParam),
     initialPageParam: 1,
   });

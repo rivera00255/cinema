@@ -3,15 +3,17 @@ import { getCredits } from '@/app/_service';
 import { useQuery } from '@tanstack/react-query';
 import styles from './cast.module.scss';
 import CastProfile from '../CastProfile';
-import { Cast } from '@/app/type';
+import { type Cast } from '@/app/type';
 import { snakeToCamel } from '@/utilities/snakeToCamel';
 import { useRouter } from 'next/navigation';
+import { MediaKeys } from '@/app/_service/keys';
 
 const Cast = ({ type, id }: { type: 'movie' | 'tv'; id: string }) => {
   const router = useRouter();
 
   const { data: credits } = useQuery({
-    queryKey: [type, 'credits', id],
+    queryKey: MediaKeys.detailInfo(type, id, 'credits'),
+    // queryKey: [type, 'credits', id],
     queryFn: () => getCredits(type, id),
   });
 

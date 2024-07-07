@@ -8,6 +8,8 @@ import { addComment, deleteComment, getCommentByMediaIdAndUserId, updateComment 
 import CommentForm from '../CommentForm';
 import Comment from '../Comment';
 import { useTranslation } from 'react-i18next';
+import { CommentKeys } from '@/app/_service/keys';
+import { Comments } from '@/app/type';
 
 export const maskingEmail = (email: string) => {
   const id = `${email.split('@')[0].slice(0, 2)}***${email.split('@')[0].slice(-1)}`;
@@ -34,25 +36,28 @@ const Review = ({ id, type }: { id: string; type: string }) => {
   const queryClient = useQueryClient();
 
   const { data: prevComment } = useQuery({
-    queryKey: ['comment', id, userId],
+    queryKey: CommentKeys.detail(id, userId),
     queryFn: () => getCommentByMediaIdAndUserId(id, userId ?? ''),
     enabled: !!userId,
   });
-  // prevComment && console.log(prevComment[0]);
 
   const { mutate: writeComment } = useMutation({
     mutationFn: addComment,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['comment', id] }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: CommentKeys.detail(id, userId) }),
   });
 
   const { mutate: editComment } = useMutation({
     mutationFn: updateComment,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['comment', id] }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: CommentKeys.detail(id, userId) }),
   });
 
   const { mutate: delComment } = useMutation({
     mutationFn: deleteComment,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['comment', id] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: CommentKeys.detail(id, userId) });
+      const prev: Comments[] | undefined = queryClient.getQueryData(CommentKeys.list(id));
+      queryClient.setQueryData(CommentKeys.list(id), () => prev && prev.filter((comment) => comment.id !== id));
+    },
   });
 
   const onSubmit = (e: SyntheticEvent) => {

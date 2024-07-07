@@ -5,10 +5,12 @@ import PhotoCarousel from '../PhotoCarousel';
 import { camelize } from '@/utilities/snakeToCamel';
 import Image from 'next/image';
 import { MediaType } from '@/app/type';
+import { MediaKeys } from '@/app/_service/keys';
 
 const Photos = ({ type, id }: { type: MediaType; id: string }) => {
   const { data: images } = useQuery({
-    queryKey: [type, 'images', id],
+    queryKey: MediaKeys.detailInfo(type, id, 'images'),
+    // queryKey: [type, 'images', id],
     queryFn: () => getImages(type, id),
   });
 

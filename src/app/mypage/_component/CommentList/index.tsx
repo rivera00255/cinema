@@ -6,13 +6,14 @@ import { useQuery } from '@tanstack/react-query';
 import { getCommentByUserId } from '@/app/_service/comment';
 import Comment from '@/app/[type]/[id]/_component/Comment';
 import Link from 'next/link';
+import { CommentKeys } from '@/app/_service/keys';
 
 const CommentList = () => {
   const session = useContext(AuthContext);
   const userId = session?.user.id ?? '';
 
   const { data } = useQuery({
-    queryKey: ['comment', userId],
+    queryKey: CommentKeys.filteredList({ userId }),
     queryFn: () => getCommentByUserId(userId),
     enabled: !!userId,
   });

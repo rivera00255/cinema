@@ -8,26 +8,32 @@ import { MediaType } from '@/app/type';
 import { useLanguageStore } from '@/store/language';
 import { useTranslation } from 'react-i18next';
 import NotFound from '@/app/not-found';
+import { MediaKeys } from '@/app/_service/keys';
 
 const MediaLists = ({ type }: { type: MediaType }) => {
   const { mode } = useLanguageStore();
   const { t } = useTranslation();
 
   const { data: nowPlaying } = useQuery({
-    queryKey: ['nowPlaying', type, mode],
+    queryKey: MediaKeys.list(type, { category: 'nowPlaying' }, undefined, mode),
     queryFn: () => getNowPlayingMovie(mode),
     enabled: type === 'movie',
   });
 
   const { data: trending } = useQuery({
-    queryKey: ['trending', 'day', mode],
+    queryKey: MediaKeys.list(type, { category: 'trending', time: 'day' }, undefined, mode),
     queryFn: () => getTrendingLists(type, 'day', 1, mode),
     enabled: type === 'tv',
   });
+  // console.log(trending);
 
-  const { data: popular } = useQuery({ queryKey: ['popular', type, mode], queryFn: () => getPopularLists(type, mode) });
+  const { data: popular } = useQuery({
+    queryKey: MediaKeys.list(type, { category: 'popular' }, undefined, mode),
+    queryFn: () => getPopularLists(type, mode),
+  });
+
   const { data: topRated } = useQuery({
-    queryKey: ['topRated', type, mode],
+    queryKey: MediaKeys.list(type, { category: 'topRated' }, undefined, mode),
     queryFn: () => getTopRatedLists(type, mode),
   });
 
@@ -38,19 +44,19 @@ const MediaLists = ({ type }: { type: MediaType }) => {
       {type === 'movie' && (
         <>
           <h3>{t('nowPlaying')}</h3>
-          <div>{nowPlaying && <Carousel item={camelize(nowPlaying.results)} />}</div>
+          <div className={styles.list}>{nowPlaying && <Carousel item={camelize(nowPlaying.results)} />}</div>
         </>
       )}
       {type === 'tv' && (
         <>
           <h3>{t('todaysTrending')}</h3>
-          <div>{trending && <Carousel item={camelize(trending.results)} />}</div>
+          <div className={styles.list}>{trending && <Carousel item={camelize(trending.results)} />}</div>
         </>
       )}
       <h3>{t('popular')}</h3>
-      <div>{popular && <Carousel item={camelize(popular.results)} />}</div>
+      <div className={styles.list}>{popular && <Carousel item={camelize(popular.results)} />}</div>
       <h3>{t('topRated')}</h3>
-      <div>{topRated && <Carousel item={camelize(topRated.results)} />}</div>
+      <div className={styles.list}>{topRated && <Carousel item={camelize(topRated.results)} />}</div>
     </div>
   );
 };

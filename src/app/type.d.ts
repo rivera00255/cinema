@@ -7,6 +7,8 @@ export type Response = {
 
 export type Lang = 'ko' | 'en-US';
 
+export type MediaType = 'movie' | 'tv';
+
 type MediaDefault = {
   adult: boolean;
   backdropPath: string;
@@ -18,8 +20,6 @@ type MediaDefault = {
   voteAverage: number;
   voteCount: number;
 };
-
-export type MediaType = 'movie' | 'tv';
 
 type Media = MediaDefault & {
   genreIds: number[];

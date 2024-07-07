@@ -12,7 +12,7 @@ const Carousel = ({ item }: { item: { [key: string]: any }[] }) => {
   return (
     <div className={styles.carousel}>
       <Swiper spaceBetween={10} slidesPerView={5} navigation={true} modules={[Navigation]}>
-        {item.map((data) => (
+        {item?.map((data) => (
           <SwiperSlide key={data.id}>
             <div className={styles.poster}>
               <Link href={`${params.type}/${data.id}`}>

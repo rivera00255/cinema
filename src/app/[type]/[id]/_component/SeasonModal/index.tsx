@@ -8,6 +8,7 @@ import { getDetailByTVSeason } from '@/app/_service';
 import { Episode } from '@/app/type';
 import { camelize } from '@/utilities/snakeToCamel';
 import { useLanguageStore } from '@/store/language';
+import { MediaKeys } from '@/app/_service/keys';
 
 const SeasonModal = () => {
   const { id } = useParams();
@@ -28,7 +29,7 @@ const SeasonModal = () => {
   // };
 
   const { data: info } = useQuery({
-    queryKey: ['tv', 'season', id, seasonNumber, mode],
+    queryKey: MediaKeys.tvDetail(id.toString(), { category: 'season', seasonNumber: seasonNumber }, mode),
     queryFn: () => getDetailByTVSeason(id.toString(), seasonNumber, mode),
     enabled: !!id && seasonNumber > -1,
   });
